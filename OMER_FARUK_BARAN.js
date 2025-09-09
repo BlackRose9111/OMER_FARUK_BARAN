@@ -58,6 +58,7 @@
             <span class="current-price">${product.price.toFixed(2)} TL</span>
             ${oldPriceHTML}
           </div>
+          <button class="add-to-cart">Add to Cart</button>
         </div>
       </div>
     `;
@@ -69,7 +70,7 @@
         section.className = "carousel";
 
         section.innerHTML = `
-      <h2 class="carousel-title">Beğenebileceğinizi düşündüklerimiz</h2>
+      <h2 class="carousel-title">Beğenebileceğinizi Düşündüklerimiz</h2>
       <button class="carousel-arrow left">&lt;</button>
       <button class="carousel-arrow right">&gt;</button>
       <div class="carousel-track">
@@ -133,7 +134,7 @@
         style.textContent = `
       .carousel { position: relative; margin: 20px auto; max-width: 1200px; padding: 10px; overflow: hidden; font-family: Arial, sans-serif; }
       .carousel-title { font-size: 20px; font-weight: bold; margin-bottom: 15px; color: #333; }
-      .carousel-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: white; border: 1px solid #ccc; border-radius: 50%; width: 35px; height: 35px; cursor: pointer; z-index: 10; }
+      .carousel-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: white; border: 1px solid #ccc; border-radius: 50%; width: 35px; height: 35px; cursor: pointer; z-index: 10; color: #f9a66c; }
       .carousel-arrow.left { left: 5px; }
       .carousel-arrow.right { right: 5px; }
       .carousel-track { display: flex; gap: 15px; overflow-x: auto; scroll-behavior: smooth; }
@@ -149,6 +150,7 @@
       .product-prices { display: flex; gap: 8px; align-items: center; }
       .current-price { font-weight: bold; color: #333; }
       .old-price { text-decoration: line-through; color: #999; font-size: 13px; }
+      .add-to-cart { margin-top: 10px; padding: 8px;  background: #f9a66c; color: white; border: none;  border-radius: 8px; cursor: pointer; font-size: 14px; text-align: center; transition: background 0.3s; }
     `;
         document.head.appendChild(style);
     }
