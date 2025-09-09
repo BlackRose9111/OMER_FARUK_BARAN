@@ -14,14 +14,21 @@
     let products = [];
     let favorites = JSON.parse(localStorage.getItem(FAVORITES_KEY)) || [];
 
+    async function init(){
+
+        await getProducts();
+    }
+
     async function getProducts() {
         const stored = localStorage.getItem(STORAGE_KEY);
         if (stored) {
             products = JSON.parse(stored);
+            console.log("Products loaded from local storage")
         } else {
             try {
                 const res = await fetch(DATA_URL);
                 products = await res.json();
+                console.log("Products fetched from API")
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(products));
             } catch (err) {
                 console.error("Failed to fetch products", err);
@@ -39,7 +46,7 @@
             const discountPercent = Math.round(
                 ((product.original_price - product.price) / product.original_price) * 100
             );
-            discountHTML = `<span class="discount-badge">%${discountPercent}</span>`;
+            discountHTML = `<span class="discount-badge">%${discountPercent} İndirim!</span>`;
             oldPriceHTML = `<span class="old-price">${product.original_price.toFixed(2)} TL</span>`;
         }
 
@@ -58,7 +65,7 @@
             <span class="current-price">${product.price.toFixed(2)} TL</span>
             ${oldPriceHTML}
           </div>
-          <button class="add-to-cart">Add to Cart</button>
+          <button class="add-to-cart">Sepete Ekle</button>
         </div>
       </div>
     `;
@@ -102,7 +109,7 @@
                 window.open(product.url, "_blank");
             });
 
-            // Prevent click on heart bubbling up
+
             const heart = card.querySelector(".heart-btn");
             heart.addEventListener("click", (e) => {
                 e.stopPropagation();
@@ -134,7 +141,7 @@
         style.textContent = `
       .carousel { position: relative; margin: 20px auto; max-width: 1200px; padding: 10px; overflow: hidden; font-family: Arial, sans-serif; }
       .carousel-title { font-size: 20px; font-weight: bold; margin-bottom: 15px; color: #333; }
-      .carousel-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: white; border: 1px solid #ccc; border-radius: 50%; width: 35px; height: 35px; cursor: pointer; z-index: 10; color: #f9a66c; }
+      .carousel-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: white; border: 1px solid #ccc; border-radius: 50%; width: 35px; height: 35px; cursor: pointer; z-index: 10; }
       .carousel-arrow.left { left: 5px; }
       .carousel-arrow.right { right: 5px; }
       .carousel-track { display: flex; gap: 15px; overflow-x: auto; scroll-behavior: smooth; }
@@ -151,10 +158,11 @@
       .current-price { font-weight: bold; color: #333; }
       .old-price { text-decoration: line-through; color: #999; font-size: 13px; }
       .add-to-cart { margin-top: 10px; padding: 8px;  background: #f9a66c; color: white; border: none;  border-radius: 8px; cursor: pointer; font-size: 14px; text-align: center; transition: background 0.3s; }
+      .add-to-cart:hover { background: #d35400; }
     `;
         document.head.appendChild(style);
     }
 
 
-    getProducts();
+    init()
 })();
